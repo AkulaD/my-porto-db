@@ -1,0 +1,121 @@
+/* ==========================================================================
+1. BASE_STYLING (Global Reset & Variable)
+========================================================================== */
+:root {
+    --bg-color: #0a0a0a;
+    --panel-bg: #141414;
+    --accent: #00ff41; /* Terminal Green */
+    --text-main: #e0e0e0;
+    --border: #333;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+2. AUTH_CONTAINER (.auth-wrapper)
+========================================================================== */
+.auth-wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.auth-box {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.auth-label {
+    background: var(--border);
+    color: var(--text-main);
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+3. AUTH_CONTENT (.auth-content)
+========================================================================== */
+.auth-content {
+    padding: 30px;
+}
+
+.auth-header h2 {
+    color: var(--accent);
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+.auth-header p {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 25px;
+}
+
+/* ==========================================================================
+4. FORM_STYLING (.auth-form)
+========================================================================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+    color: var(--accent);
+}
+
+.form-group input {
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--border);
+    padding: 12px;
+    color: var(--accent);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: var(--accent);
+}
+
+.auth-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.auth-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* ==========================================================================
+5. RESPONSIVE_ADAPTATION
+========================================================================== */
+@media (max-width: 480px) {
+    .auth-wrapper {
+        max-width: 90%;
+    }
+    
+    .auth-content {
+        padding: 20px;
+    }
+}
