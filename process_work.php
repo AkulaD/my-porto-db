@@ -7,8 +7,13 @@ $action = $_REQUEST['action'] ?? '';
 if ($action == 'create_work' && $_SERVER["REQUEST_METHOD"] == "POST") {
     $role    = mysqli_real_escape_string($conn, $_POST['role']);
     $cp      = mysqli_real_escape_string($conn, $_POST['company_project']);
-    $period  = mysqli_real_escape_string($conn, $_POST['period']);
+    $period_start  = mysqli_real_escape_string($conn, $_POST['period_start']);
+    $period_end    = mysqli_real_escape_string($conn, $_POST['period_end']);
     $status  = mysqli_real_escape_string($conn, $_POST['status']);
+
+    $start = strtoupper(date('M Y', strtotime($period_start)));
+    $end   = strtoupper(date('M Y', strtotime($period_end)));
+    $period = "$start - $end";
 
     $sql = "INSERT INTO work_logs (period, status, role, company_project) VALUES ('$period', '$status', '$role', '$cp')";
     mysqli_query($conn, $sql);

@@ -6,13 +6,14 @@ $action = $_REQUEST['action'] ?? '';
 
 if ($action == 'create' && $_SERVER["REQUEST_METHOD"] == "POST") {
     $name   = mysqli_real_escape_string($conn, $_POST['project_name']);
+    $date   = mysqli_real_escape_string($conn, $_POST['deploy_date']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
     $desc   = mysqli_real_escape_string($conn, $_POST['description']);
     $stack  = mysqli_real_escape_string($conn, $_POST['tech_stack']);
     $url    = mysqli_real_escape_string($conn, $_POST['url']);
 
-    $sql = "INSERT INTO projects (project_name, status, description, tech_stack, url) 
-            VALUES ('$name', '$status', '$desc', '$stack', '$url')";
+    $sql = "INSERT INTO projects (project_name, period, status, description, tech_stack, url) 
+            VALUES ('$name', '$date', '$status', '$desc', '$stack', '$url')";
     
     if (mysqli_query($conn, $sql)) {
         header("Location: manage_projects.php?status=success");

@@ -60,13 +60,19 @@ $result = mysqli_query($conn, $query);
             <div class="panel-label">REGISTER_NEW_CERTIFICATE</div>
             <form action="process_certificates.php" method="POST" class="editor-form">
                 <input type="hidden" name="action" value="create">
-                <div class="input-group">
-                    <label>CERT_CODE (e.g. BNSP-WD-2024)</label>
-                    <input type="text" name="cert_date" required placeholder="Bulan - Tahun">
+                <div class="editor-row">
+                    <div class="input-group">
+                        <label>CERT_DATE (e.g. BNSP-WD-2024)</label>
+                        <input type="date" name="cert_date" required placeholder="Bulan - Tahun">
+                    </div>
+                    <div class="input-group">
+                        <label>CERTIFICATE_TITLE</label>
+                        <input type="text" name="cert_name" required placeholder="Nama Sertifikasi">
+                    </div>
                 </div>
                 <div class="input-group">
-                    <label>CERTIFICATE_TITLE</label>
-                    <input type="text" name="cert_name" required placeholder="Nama Sertifikasi">
+                    <label>LINK CERTIFICATE</label>
+                    <input type="text" name="link_cert" id="link_cert">
                 </div>
                 <div class="input-group">
                     <label>DESCRIPTION_LOG</label>

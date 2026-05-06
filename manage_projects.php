@@ -79,6 +79,10 @@ $result = mysqli_query($conn, $query);
                     <label>PROJECT_NAME</label>
                     <input type="text" name="project_name" required>
                 </div>
+                <div class="input-group">
+                    <label class="label">DEPLOY_DATE</label>
+                    <input type="date" name="deploy_date" required>
+                </div>
                 <div class="editor-row">
                     <div class="input-group">
                         <label>STATUS</label>

@@ -99,17 +99,21 @@ $result = mysqli_query($conn, $query);
                 </div>
                 <div class="editor-row">
                     <div class="input-group">
-                        <label>PERIOD</label>
-                        <input type="text" name="period" placeholder="JAN 2026 - PRESENT" required>
+                        <label>START_PERIOD</label>
+                        <input type="date" name="period_start" required>
                     </div>
                     <div class="input-group">
-                        <label>STATUS</label>
-                        <select name="status" style="width: 100%; background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px;">
-                            <option value="COMPLETED">COMPLETED</option>
-                            <option value="IN_PROGRESS">IN_PROGRESS</option>
-                            <option value="OPTIMAL">OPTIMAL</option>
-                        </select>
+                        <label>END_PERIOD</label>
+                        <input type="date" name="period_end" required>
                     </div>
+                </div>
+                <div class="input-group">
+                    <label>STATUS</label>
+                    <select name="status" style="width: 100%; background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px;">
+                        <option value="COMPLETED">COMPLETED</option>
+                        <option value="IN_PROGRESS">IN_PROGRESS</option>
+                        <option value="OPTIMAL">OPTIMAL</option>
+                    </select>
                 </div>
                 <button type="submit" class="save-btn">EXECUTE_SAVE</button>
                 <button type="button" onclick="document.getElementById('add-work-modal').style.display='none'" class="btn-delete">ABORT</button>

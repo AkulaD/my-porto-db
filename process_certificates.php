@@ -7,9 +7,10 @@ $action = $_REQUEST['action'] ?? '';
 if ($action == 'create' && $_SERVER["REQUEST_METHOD"] == "POST") {
     $date = mysqli_real_escape_string($conn, $_POST['cert_date']);
     $name = mysqli_real_escape_string($conn, $_POST['cert_name']);
+    $url = mysqli_real_escape_string($conn, $_POST['link_cert']);
     $desc = mysqli_real_escape_string($conn, $_POST['description']);
 
-    $sql = "INSERT INTO certificates (cert_date, cert_name, issuer) VALUES ('$date', '$name', '$desc')";
+    $sql = "INSERT INTO certificates (cert_date, cert_name, issuer, link_cert) VALUES ('$date', '$name', '$desc', '$url')";
     
     if (mysqli_query($conn, $sql)) {
         header("Location: manage_certificates.php?status=success");
