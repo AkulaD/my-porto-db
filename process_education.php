@@ -38,3 +38,23 @@ if ($action == 'delete_detail' && isset($_GET['id'])) {
     mysqli_query($conn, "DELETE FROM education_details WHERE id = $id");
     header("Location: manage_education.php");
 }
+
+// 5. Update Instansi Pendidikan
+if ($action == 'update_edu' && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = (int)$_POST['id'];
+    $inst = mysqli_real_escape_string($conn, $_POST['institution']);
+    $period = mysqli_real_escape_string($conn, $_POST['period']);
+    $major = mysqli_real_escape_string($conn, $_POST['major']);
+
+    $sql = "UPDATE education SET 
+            institution = '$inst', 
+            period = '$period', 
+            major = '$major' 
+            WHERE id = $id";
+            
+    if (mysqli_query($conn, $sql)) {
+        header("Location: manage_education.php?status=updated");
+    } else {
+        echo "DATABASE_ERROR: " . mysqli_error($conn);
+    }
+}

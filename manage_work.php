@@ -13,11 +13,12 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WORK_LOGS_EDITOR | COMMAND_CENTER</title>
     <link rel="stylesheet" href="data/css/dashboard_style.css">
+    <script src="data/js/dashboard_script.js" defer></script>
 </head>
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php">01_IDENTITY</a>
                 <a href="manage_skills.php">02_SKILLS</a>
@@ -40,7 +41,10 @@ $result = mysqli_query($conn, $query);
             <section class="db-content">
                 <?php while($work = mysqli_fetch_assoc($result)): ?>
                 <div class="panel-box-admin" style="margin-bottom: 30px; border-left: 3px solid var(--accent);">
-                    <div class="panel-label">LOG_ENTRY_ID: <?= $work['id'] ?></div>
+                    <div class="panel-label">
+                        LOG_ENTRY_ID: <?= $work['id'] ?>
+                        <a href="javascript:void(0)" onclick="openEditWorkModal(<?= htmlspecialchars(json_encode($work)) ?>)" style="color: var(--accent); margin-left: 10px; text-decoration: none; font-size: 0.7rem;">[RECONFIGURE_LOG]</a>
+                    </div>
                     
                     <div class="work-item-admin">
                         <div class="work-header" style="display: flex; justify-content: space-between;">
@@ -84,6 +88,7 @@ $result = mysqli_query($conn, $query);
         </main>
     </div>
 
+    <!-- Modal Tambah Instansi (Simple Hidden Div) -->
     <div id="add-work-modal" class="modal">
         <div class="modal-content">
             <div class="panel-label">NEW_WORK_RECORD_INITIALIZATION</div>
@@ -120,5 +125,41 @@ $result = mysqli_query($conn, $query);
             </form>
         </div>
     </div>
+
+    <!-- Modal Edit Education -->
+    <div id="edit-work-modal" class="modal">
+    <div class="modal-content">
+        <div class="panel-label">RECONFIGURE_WORK_RECORD</div>
+        <form action="process_work.php" method="POST" class="editor-form">
+            <input type="hidden" name="action" value="update_work">
+            <input type="hidden" name="id" id="edit-work-id">
+            
+            <div class="input-group">
+                <label>ROLE / JABATAN</label>
+                <input type="text" name="role" id="edit-work-role" required>
+            </div>
+            <div class="input-group">
+                <label>COMPANY_PROJECT</label>
+                <input type="text" name="company_project" id="edit-work-cp" required>
+            </div>
+            <div class="editor-row">
+                <div class="input-group">
+                    <label>PERIOD (String Format)</label>
+                    <input type="text" name="period" id="edit-work-period" placeholder="e.g. JUN 2026 - NOV 2026" required>
+                </div>
+                <div class="input-group">
+                    <label>STATUS</label>
+                    <select name="status" id="edit-work-status" style="width: 100%; background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px;">
+                        <option value="COMPLETED">COMPLETED</option>
+                        <option value="IN_PROGRESS">IN_PROGRESS</option>
+                        <option value="OPTIMAL">OPTIMAL</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="save-btn">UPDATE_LOG</button>
+            <button type="button" onclick="document.getElementById('edit-work-modal').style.display='none'" class="btn-delete">ABORT</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

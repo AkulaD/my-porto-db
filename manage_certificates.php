@@ -13,11 +13,12 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CERTIFICATES_EDITOR | COMMAND_CENTER</title>
     <link rel="stylesheet" href="data/css/dashboard_style.css">
+    <script src="data/js/dashboard_script.js" defer></script>
 </head>
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php">01_IDENTITY</a>
                 <a href="manage_skills.php">02_SKILLS</a>
@@ -34,7 +35,7 @@ $result = mysqli_query($conn, $query);
         <main class="db-main">
             <header class="db-header">
                 <h3>/root/dashboard/authorized_certificates.json</h3>
-                <button onclick="document.getElementById('add-cert-modal').style.display='block'" class="save-btn">ADD_NEW_CERTIFICATE</button>
+                <button onclick="openAddModal()" class="save-btn">ADD_NEW_CERTIFICATE</button>
             </header>
             
             <section class="db-content">
@@ -43,10 +44,20 @@ $result = mysqli_query($conn, $query);
                     <div class="cert-card-admin">
                         <div class="cert-header-admin">
                             <span class="cert-code"><?= $cert['cert_date'] ?></span>
-                            <a href="process_certificates.php?action=delete&id=<?= $cert['id'] ?>" class="cert-del" onclick="return confirm('REVOKE_CERTIFICATE?')">[x]</a>
+                            <div>
+                                <a href="javascript:void(0)" class="cert-edit" 
+                                onclick="openEditModal(<?= htmlspecialchars(json_encode($cert)) ?>)" 
+                                style="color: var(--accent); text-decoration: none; font-size: 0.8rem; margin-right: 10px;">[e]</a>
+                                
+                                <a href="process_certificates.php?action=delete&id=<?= $cert['id'] ?>" class="cert-del" onclick="return confirm('REVOKE_CERTIFICATE?')">[x]</a>
+                            </div>
                         </div>
-                        <h4 class="cert-title-admin"><?= $cert['cert_name'] ?></h4>
-                        <p class="cert-desc-admin"><?= $cert['issuer'] ?></p>
+                        
+                        <h4 class="cert-title-admin" style="color: var(--text-main); margin-top: 10px; text-transform: uppercase;">
+                            <?= htmlspecialchars($cert['cert_name']) ?>
+                        </h4>
+                        
+                        <p class="cert-desc-admin"><?= htmlspecialchars($cert['issuer']) ?></p>
                     </div>
                     <?php endwhile; ?>
                 </div>
@@ -79,7 +90,38 @@ $result = mysqli_query($conn, $query);
                     <textarea name="description" rows="3" required placeholder="Deskripsi atau badan penerbit..."></textarea>
                 </div>
                 <button type="submit" class="save-btn">INJECT_CERTIFICATE</button>
-                <button type="button" onclick="document.getElementById('add-cert-modal').style.display='none'" class="btn-delete">CANCEL</button>
+                <button type="button" onclick="closeModal('add-cert-modal')" class="btn-delete">CANCEL</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modal Edit Sertifikat -->
+    <div id="edit-cert-modal" class="modal">
+        <div class="modal-content">
+            <div class="panel-label">RECONFIGURE_CERTIFICATE_DATA</div>
+            <form action="process_certificates.php" method="POST" class="editor-form">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" id="edit-id">
+                
+                <div class="editor-row">
+                    <div class="input-group">
+                        <label>CERT_DATE</label>
+                        <input type="date" name="cert_date" id="edit-date" required>
+                    </div>
+                    <div class="input-group">
+                        <label>CERTIFICATE_TITLE</label>
+                        <input type="text" name="cert_name" id="edit-name" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>LINK CERTIFICATE</label>
+                    <input type="text" name="link_cert" id="edit-link">
+                </div>
+                <div class="input-group">
+                    <label>ISSUER / DESCRIPTION</label>
+                    <textarea name="description" id="edit-desc" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="save-btn">UPDATE_DATA</button>
+                <button type="button" onclick="closeModal('edit-cert-modal')" class="btn-delete">CANCEL</button>
             </form>
         </div>
     </div>

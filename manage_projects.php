@@ -13,11 +13,12 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECTS_EDITOR | COMMAND_CENTER</title>
     <link rel="stylesheet" href="data/css/dashboard_style.css">
+    <script src="data/js/dashboard_script.js" defer></script>
 </head>
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php">01_IDENTITY</a>
                 <a href="manage_skills.php">02_SKILLS</a>
@@ -47,6 +48,7 @@ $result = mysqli_query($conn, $query);
                                 <small style="color: var(--text-dim);">STATUS: <?= $row['status'] ?></small>
                             </div>
                             <div class="actions">
+                                <a href="javascript:void(0)" onclick="openEditProjectModal(<?= htmlspecialchars(json_encode($row)) ?>)" class="save-btn" style="text-decoration: none; padding: 5px 10px; font-size: 0.7rem;">EDIT</a>
                                 <a href="process_projects.php?action=delete&id=<?= $row['id'] ?>" class="btn-delete" onclick="return confirm('UNSET_PROJECT?')">DELETE</a>
                             </div>
                         </div>
@@ -103,6 +105,46 @@ $result = mysqli_query($conn, $query);
                 </div>
                 <button type="submit" class="save-btn">DEPLOY_METADATA</button>
                 <button type="button" onclick="document.getElementById('add-project-modal').style.display='none'" class="btn-delete">CANCEL</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Edit Proyek -->
+    <div id="edit-project-modal" class="modal">
+        <div class="modal-content">
+            <div class="panel-label">RECONFIGURE_PROJECT_DATA</div>
+            <form action="process_projects.php" method="POST" class="editor-form">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" id="edit-id">
+                
+                <div class="input-group">
+                    <label>PROJECT_NAME</label>
+                    <input type="text" name="project_name" id="edit-name" required>
+                </div>
+                <div class="input-group">
+                    <label>DEPLOY_DATE</label>
+                    <input type="date" name="deploy_date" id="edit-date" required>
+                </div>
+                <div class="editor-row">
+                    <div class="input-group">
+                        <label>STATUS</label>
+                        <input type="text" name="status" id="edit-status" required>
+                    </div>
+                    <div class="input-group">
+                        <label>TECH_STACK</label>
+                        <input type="text" name="tech_stack" id="edit-stack" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>EXTERNAL_URL</label>
+                    <input type="url" name="url" id="edit-url">
+                </div>
+                <div class="input-group">
+                    <label>PROJECT_DESCRIPTION</label>
+                    <textarea name="description" id="edit-desc" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="save-btn">UPDATE_METADATA</button>
+                <button type="button" onclick="document.getElementById('edit-project-modal').style.display='none'" class="btn-delete">CANCEL</button>
             </form>
         </div>
     </div>

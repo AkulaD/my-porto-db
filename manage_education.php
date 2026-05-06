@@ -13,11 +13,12 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUCATION_EDITOR | COMMAND_CENTER</title>
     <link rel="stylesheet" href="data/css/dashboard_style.css">
+    <script src="data/js/dashboard_script.js" defer></script>
 </head>
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php">01_IDENTITY</a>
                 <a href="manage_skills.php">02_SKILLS</a>
@@ -40,7 +41,10 @@ $result = mysqli_query($conn, $query);
             <section class="db-content">
                 <?php while($edu = mysqli_fetch_assoc($result)): ?>
                 <div class="panel-box-admin" style="margin-bottom: 30px;">
-                    <div class="panel-label">INSTITUTION_ID: <?= $edu['id'] ?></div>
+                    <div class="panel-label">
+                        INSTITUTION_ID: <?= $edu['id'] ?> 
+                        <a href="javascript:void(0)" onclick="openEditEduModal(<?= htmlspecialchars(json_encode($edu)) ?>)" style="color: var(--accent); margin-left: 10px; text-decoration: none;">[RECONFIGURE]</a>
+                    </div>
                     <div class="edu-item-admin">
                         <div class="edu-info">
                             <h4 style="color: var(--accent); margin: 0;"><?= $edu['institution'] ?></h4>
@@ -102,6 +106,34 @@ $result = mysqli_query($conn, $query);
                 </div>
                 <button type="submit" class="save-btn">SAVE_RECORD</button>
                 <button type="button" onclick="document.getElementById('add-edu-modal').style.display='none'" class="btn-delete">CANCEL</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Edit Education -->
+    <div id="edit-edu-modal" class="modal">
+        <div class="modal-content">
+            <div class="panel-label">RECONFIGURE_ACADEMIC_RECORD</div>
+            <form action="process_education.php" method="POST" class="editor-form">
+                <input type="hidden" name="action" value="update_edu">
+                <input type="hidden" name="id" id="edit-edu-id">
+                
+                <div class="input-group">
+                    <label>INSTITUTION_NAME</label>
+                    <input type="text" name="institution" id="edit-edu-inst" required>
+                </div>
+                <div class="editor-row">
+                    <div class="input-group">
+                        <label>PERIOD</label>
+                        <input type="text" name="period" id="edit-edu-period" required>
+                    </div>
+                    <div class="input-group">
+                        <label>MAJOR</label>
+                        <input type="text" name="major" id="edit-edu-major" required>
+                    </div>
+                </div>
+                <button type="submit" class="save-btn">UPDATE_RECORD</button>
+                <button type="button" onclick="document.getElementById('edit-edu-modal').style.display='none'" class="btn-delete">CANCEL</button>
             </form>
         </div>
     </div>

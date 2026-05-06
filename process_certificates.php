@@ -19,6 +19,27 @@ if ($action == 'create' && $_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+if ($action == 'update' && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = (int)$_POST['id'];
+    $date = mysqli_real_escape_string($conn, $_POST['cert_date']);
+    $name = mysqli_real_escape_string($conn, $_POST['cert_name']);
+    $url = mysqli_real_escape_string($conn, $_POST['link_cert']);
+    $desc = mysqli_real_escape_string($conn, $_POST['description']);
+
+    $sql = "UPDATE certificates SET 
+            cert_date = '$date', 
+            cert_name = '$name', 
+            issuer = '$desc', 
+            link_cert = '$url' 
+            WHERE id = $id";
+
+    if (mysqli_query($conn, $sql)) {
+        header("Location: manage_certificates.php?status=updated");
+    } else {
+        echo "DATABASE_ERROR: " . mysqli_error($conn);
+    }
+}
+
 if ($action == 'delete' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
     

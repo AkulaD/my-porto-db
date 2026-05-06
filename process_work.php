@@ -40,3 +40,25 @@ if ($action == 'delete_detail' && isset($_GET['id'])) {
     mysqli_query($conn, "DELETE FROM work_details WHERE id = $id");
     header("Location: manage_work.php");
 }
+
+// Update work log
+if ($action == 'update_work' && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $id     = (int)$_POST['id'];
+    $role   = mysqli_real_escape_string($conn, $_POST['role']);
+    $cp     = mysqli_real_escape_string($conn, $_POST['company_project']);
+    $period = mysqli_real_escape_string($conn, $_POST['period']);
+    $status = mysqli_real_escape_string($conn, $_POST['status']);
+
+    $sql = "UPDATE work_logs SET 
+            role = '$role', 
+            company_project = '$cp', 
+            period = '$period', 
+            status = '$status' 
+            WHERE id = $id";
+            
+    if (mysqli_query($conn, $sql)) {
+        header("Location: manage_work.php?status=updated");
+    } else {
+        echo "EXECUTION_ERROR: " . mysqli_error($conn);
+    }
+}

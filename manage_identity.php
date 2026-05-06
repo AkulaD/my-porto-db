@@ -18,7 +18,7 @@ $user = mysqli_fetch_assoc($result);
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php" class="active">01_IDENTITY</a>
                 <a href="manage_skills.php">02_SKILLS</a>

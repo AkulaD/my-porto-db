@@ -33,3 +33,29 @@ if ($action == 'delete' && isset($_GET['id'])) {
         echo "EXECUTION_ERROR: " . mysqli_error($conn);
     }
 }
+
+// edit proyek
+if ($action == 'update' && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $id     = (int)$_POST['id'];
+    $name   = mysqli_real_escape_string($conn, $_POST['project_name']);
+    $date   = mysqli_real_escape_string($conn, $_POST['deploy_date']);
+    $status = mysqli_real_escape_string($conn, $_POST['status']);
+    $desc   = mysqli_real_escape_string($conn, $_POST['description']);
+    $stack  = mysqli_real_escape_string($conn, $_POST['tech_stack']);
+    $url    = mysqli_real_escape_string($conn, $_POST['url']);
+
+    $sql = "UPDATE projects SET 
+            project_name = '$name', 
+            period = '$date', 
+            status = '$status', 
+            description = '$desc', 
+            tech_stack = '$stack', 
+            url = '$url' 
+            WHERE id = $id";
+    
+    if (mysqli_query($conn, $sql)) {
+        header("Location: manage_projects.php?status=updated");
+    } else {
+        echo "EXECUTION_ERROR: " . mysqli_error($conn);
+    }
+}

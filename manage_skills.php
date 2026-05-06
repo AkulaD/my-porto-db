@@ -17,7 +17,7 @@ $result = mysqli_query($conn, $query);
 <body>
     <div class="db-container">
         <aside class="db-sidebar">
-            <div class="db-brand">COMMAND_CENTER_V4</div>
+            <div class="db-brand">COMMAND_CENTER_V4.5</div>
             <nav class="db-nav">
                 <a href="manage_identity.php">01_IDENTITY</a>
                 <a href="manage_skills.php" class="active">02_SKILLS</a>
